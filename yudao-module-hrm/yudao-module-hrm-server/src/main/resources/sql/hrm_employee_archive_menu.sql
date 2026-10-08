@@ -64,8 +64,7 @@ INSERT INTO system_dict_data(dict_type, label, value, sort, status, color_type, 
 (@dict_type_id, '实习生', '3', 3, 0, 'info', '', '', '1', NOW(), '1', NOW(), false),
 (@dict_type_id, '临时工', '5', 5, 0, 'default', '', '', '1', NOW(), '1', NOW(), false),
 (@dict_type_id, '离职', '6', 6, 0, 'default', '', '', '1', NOW(), '1', NOW(), false),
-(@dict_type_id, '退休', '7', 6, 0, 'default', '', '', '1', NOW(), '1', NOW(), false),
-;
+(@dict_type_id, '退休', '7', 6, 0, 'default', '', '', '1', NOW(), '1', NOW(), false);
 
 -- 职务字典
 INSERT INTO system_dict_type(name, type, status, remark, creator, create_time, updater, update_time, deleted, deleted_time)

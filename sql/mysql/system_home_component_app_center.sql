@@ -15,7 +15,7 @@
 INSERT INTO `ruoyi-office`.system_home_component
 (id, category_id, name, code, component_path, description, preview_image, default_width, default_height, config_schema, status, sort, creator, create_time, updater, update_time, deleted, tenant_id)
 VALUES(
-  22,                                                           -- id: 组件ID（需要根据实际情况调整）
+  23,                                                           -- id: 组件ID（需要根据实际情况调整）
   2,                                                            -- category_id: 分类ID（2=工作台组件）
   '应用中心',                                                   -- name: 组件名称
   'workbench_app_center',                                       -- code: 组件编码（唯一）

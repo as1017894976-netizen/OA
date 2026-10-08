@@ -15,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import jakarta.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import cn.iocoder.yudao.module.oa.controller.admin.car.vo.*;
@@ -74,6 +75,7 @@ public class CarReturnBillServiceImpl implements CarReturnBillService, FlowBillS
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Long submitCarReturnBill(CarReturnBillSaveReqVO saveReqVO) {
 
         // 如果单号为空，需要生成

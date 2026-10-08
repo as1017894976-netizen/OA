@@ -15,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import jakarta.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -83,6 +84,7 @@ public class MeetingRoomBookingServiceImpl implements MeetingRoomBookingService,
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Long submitMeetingRoomBooking(MeetingRoomBookingSaveReqVO saveReqVO) {
         // 如果单号为空，需要生成
         if (StringUtils.isBlank(saveReqVO.getBillCode())) {

@@ -1,0 +1,71 @@
+# 按顺序执行的 SQL 文件（相对仓库根目录）。以 # 开头的行是注释。
+# 以 "? " 开头的是增量变更脚本，允许其中的字段/索引已存在。
+# 1. 基础平台（系统、基建、菜单、字典）
+sql/mysql/ruoyi-vue-pro.sql
+# 2. 首页设计器、日程、公告已读、通用附件
+sql/mysql/system_home_component.sql
+sql/mysql/system_home_app_center.sql
+sql/mysql/system_home_page.sql
+sql/mysql/system_home_page_layout_migration.sql
+sql/mysql/system_home_component_welcome.sql
+sql/mysql/system_home_component_notice.sql
+sql/mysql/system_home_component_schedule.sql
+sql/mysql/system_home_component_task_list.sql
+sql/mysql/system_home_component_app_center.sql
+sql/mysql/update_component_config_schema.sql
+sql/mysql/update_component_width_for_12col.sql
+sql/mysql/add_component_margin_config.sql
+sql/mysql/add_component_padding_config.sql
+sql/mysql/add_floating_title_config.sql
+# 以下脚本给出组件配置的最终完整版本，必须放在上面几个之后
+sql/mysql/update_component_config_complete.sql
+sql/mysql/system_schedule.sql
+sql/mysql/system_schedule_receiver.sql
+sql/mysql/system_schedule_dict.sql
+sql/mysql/create_notice_read_table.sql
+? sql/mysql/add_notice_is_important_field.sql
+sql/mysql/update_system_notice_type_dict.sql
+sql/mysql/dashboard_menu.sql
+# 3. 流程（BPM）扩展表、用车表、资产/仓储表（主脚本缺失，由 script/db-init 生成）
+sql/mysql/oa-init/01_bpm_tables.sql
+sql/mysql/oa-init/02_oa_car_tables.sql
+sql/mysql/oa-init/03_asset_wms_tables.sql
+sql/mysql/oa-init/04_common_attachment.sql
+# 4. OA 协同办公
+yudao-module-oa/yudao-module-oa-server/src/main/resources/sql/meeting_room_management.sql
+yudao-module-oa/yudao-module-oa-server/src/main/resources/sql/meeting_room_booking.sql
+yudao-module-oa/yudao-module-oa-server/src/main/resources/sql/seal_management.sql
+yudao-module-oa/yudao-module-oa-server/src/main/resources/sql/seal_apply_bill.sql
+? yudao-module-oa/yudao-module-oa-server/src/main/resources/sql/seal_apply_bill_update.sql
+yudao-module-oa/yudao-module-oa-server/src/main/resources/sql/seal_apply_bill_menu_dict.sql
+# 企业云盘：用单表脚本（比 enterprise_cloud_disk.sql 新，多了 file_suffix、分享相关字段）
+yudao-module-oa/yudao-module-oa-server/src/main/resources/sql/oa_file_info.sql
+yudao-module-oa/yudao-module-oa-server/src/main/resources/sql/oa_file_favorite.sql
+? yudao-module-oa/yudao-module-oa-server/src/main/resources/sql/update_file_info_add_category.sql
+yudao-module-oa/yudao-module-oa-server/src/main/resources/sql/update_file_permission_table.sql
+yudao-module-oa/yudao-module-oa-server/src/main/resources/sql/oa_file_menu_dict.sql
+# 5. 人力资源
+yudao-module-hrm/yudao-module-hrm-server/src/main/resources/sql/hrm_employee_archive.sql
+? yudao-module-hrm/yudao-module-hrm-server/src/main/resources/sql/hrm_employee_archive_alter_date.sql
+? yudao-module-hrm/yudao-module-hrm-server/src/main/resources/sql/hrm_employee_add_dept_name_company_id.sql
+yudao-module-hrm/yudao-module-hrm-server/src/main/resources/sql/hrm_employee_entry_bill.sql
+yudao-module-hrm/yudao-module-hrm-server/src/main/resources/sql/hrm_employee_entry_bill_detail.sql
+? yudao-module-hrm/yudao-module-hrm-server/src/main/resources/sql/hrm_employee_entry_bill_add_education.sql
+? yudao-module-hrm/yudao-module-hrm-server/src/main/resources/sql/hrm_employee_add_job_post.sql
+yudao-module-hrm/yudao-module-hrm-server/src/main/resources/sql/hrm_employee_regular_bill.sql
+yudao-module-hrm/yudao-module-hrm-server/src/main/resources/sql/hrm_employee_resignation_bill.sql
+yudao-module-hrm/yudao-module-hrm-server/src/main/resources/sql/hrm_employee_transfer_bill.sql
+? yudao-module-hrm/yudao-module-hrm-server/src/main/resources/sql/hrm_employee_transfer_bill_alter_effective_immediately.sql
+yudao-module-hrm/yudao-module-hrm-server/src/main/resources/sql/hrm_job_post_dict.sql
+yudao-module-hrm/yudao-module-hrm-server/src/main/resources/sql/hrm_resignation_reason_dict.sql
+yudao-module-hrm/yudao-module-hrm-server/src/main/resources/sql/hrm_resignation_type_dict.sql
+yudao-module-hrm/yudao-module-hrm-server/src/main/resources/sql/hrm_transfer_reason_dict.sql
+yudao-module-hrm/yudao-module-hrm-server/src/main/resources/sql/hrm_transfer_type_dict.sql
+yudao-module-hrm/yudao-module-hrm-server/src/main/resources/sql/hrm_employee_entry_bill_menu.sql
+yudao-module-hrm/yudao-module-hrm-server/src/main/resources/sql/hrm_employee_regular_bill_menu.sql
+yudao-module-hrm/yudao-module-hrm-server/src/main/resources/sql/hrm_employee_resignation_bill_menu.sql
+yudao-module-hrm/yudao-module-hrm-server/src/main/resources/sql/hrm_employee_transfer_bill_menu.sql
+yudao-module-hrm/yudao-module-hrm-server/src/main/resources/sql/hrm_employee_archive_menu.sql
+# 6. 补上实体类有但建表脚本漏掉的字段；修正菜单
+? sql/mysql/oa-init/80_missing_columns.sql
+sql/mysql/oa-init/90_menu_fixup.sql

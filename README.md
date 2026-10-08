@@ -443,8 +443,9 @@ MySQL / PostgreSQL / Oracle / 达梦 / 人大金仓 / SQL Server，**全面适�
 # 1. 克隆项目
 git clone https://github.com/your-org/ruoyi-office.git
 
-# 2. 导入数据库
-mysql -u root -p < sql/mysql/ruoyi-vue-pro.sql
+# 2. 导入数据库（完整脚本，含流程、OA、人力的表和菜单，说明见 sql/mysql/oa-init/README.md）
+mysql -u root -p -e 'CREATE DATABASE `ruoyi-office` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci'
+mysql -u root -p --default-character-set=utf8mb4 ruoyi-office < sql/mysql/ruoyi-office-init.sql
 
 # 3. 启动后端（先启动 Nacos）
 cd ruoyi-office
