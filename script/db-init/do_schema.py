@@ -32,7 +32,7 @@ def parse_do(path):
         if s.startswith('@'):
             pending += ' ' + s
             continue
-        fm = re.match(r'private\s+(?!static)(?!final)(?:transient\s+)?([\w<>, ?\[\]]+?)\s+(\w+)\s*(=[^;]*)?;', s)
+        fm = re.match(r'private\s+(?!static)(?!final)(?:transient\s+)?([\w.<>, ?\[\]]+?)\s+(\w+)\s*(=[^;]*)?;', s)
         if fm:
             ann = pending
             pending = ''
@@ -103,7 +103,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('roots', nargs='+', help='模块目录，如 yudao-module-oa')
     ap.add_argument('--ddl', nargs='*', help='为这些表生成建表语句')
-    ap.add_argument('--check', help='数据库列清单文件（每行: 表名<TAB>列名），输出缺失的表和列')
+    ap.add_argument('--check', help='数据库列清单文件（每行: 表名<TAB>列名[<TAB>是否必填且无默认值 1/0]），'
+                                    '输出缺失的表和列，以及实体类里没有、插入时必然报错的必填列')
     a = ap.parse_args()
     tables = scan(a.roots)
     if a.ddl is not None:
@@ -111,11 +112,13 @@ def main():
         for t in a.ddl:
             print(ddl(tables[t]))
     elif a.check:
-        db = {}
+        db, required = {}, {}
         for line in open(a.check, encoding='utf-8'):
             if '\t' in line:
-                t, c = line.rstrip('\n').split('\t')[:2]
+                t, c, *flag = line.rstrip('\n').split('\t')
                 db.setdefault(t, set()).add(c.lower())
+                if flag and flag[0] == '1':
+                    required.setdefault(t, []).append(c.lower())
         bad = 0
         for t, i in sorted(tables.items()):
             if t not in db:
@@ -125,6 +128,11 @@ def main():
             miss = [c for c, _, _ in i['cols'] if c.lower() not in db[t]]
             if miss:
                 print(f'缺列  {t}: {", ".join(miss)}')
+                bad += 1
+            cols = {c.lower() for c, _, _ in i['cols']}
+            extra = [c for c in required.get(t, []) if c not in cols]
+            if extra:
+                print(f'必填列实体类里没有（插入会报 doesn\'t have a default value）  {t}: {", ".join(extra)}')
                 bad += 1
         print(f'共 {len(tables)} 张表，{bad} 张有问题')
         sys.exit(1 if bad else 0)

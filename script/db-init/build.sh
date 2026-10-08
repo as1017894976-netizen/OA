@@ -32,7 +32,8 @@ grep -vE '^\s*(#|$)' script/db-init/files.txt | while read -r line; do
 done
 
 echo ">> 校验实体类与表结构"
-$MYSQL -N -e "SELECT table_name, column_name FROM information_schema.columns WHERE table_schema='$DB'" 2>/dev/null > "$LOG.cols"
+$MYSQL -N -e "SELECT table_name, column_name, is_nullable = 'NO' AND column_default IS NULL AND extra NOT LIKE '%auto_increment%'
+  FROM information_schema.columns WHERE table_schema='$DB'" 2>/dev/null > "$LOG.cols"
 python3 -I script/db-init/do_schema.py \
   yudao-framework yudao-module-system yudao-module-infra yudao-module-bpm yudao-module-oa \
   yudao-module-hrm yudao-module-asset yudao-module-wms --check "$LOG.cols"

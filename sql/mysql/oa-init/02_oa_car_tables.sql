@@ -3,11 +3,11 @@ SET NAMES utf8mb4;
 DROP TABLE IF EXISTS `oa_car`;
 CREATE TABLE `oa_car` (
   `id` BIGINT NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `car_no` VARCHAR(32) NOT NULL COMMENT '车牌号',
+  `car_no` VARCHAR(32) NULL COMMENT '车牌号',
   `car_name` VARCHAR(64) NULL COMMENT '车辆名称',
-  `car_type` BIGINT NOT NULL COMMENT '车型',
-  `car_cls` BIGINT NOT NULL COMMENT '分类',
-  `brand` VARCHAR(64) NOT NULL COMMENT '品牌型号',
+  `car_type` BIGINT NULL COMMENT '车型',
+  `car_cls` BIGINT NULL COMMENT '分类',
+  `brand` VARCHAR(64) NULL COMMENT '品牌型号',
   `seat_num` VARCHAR(32) NULL COMMENT '车座',
   `bare_price` DECIMAL(24,2) NULL COMMENT '裸车价',
   `force_insurance_date` DATE NULL COMMENT '交强险到期日期',
@@ -31,7 +31,7 @@ CREATE TABLE `oa_car` (
 DROP TABLE IF EXISTS `oa_car_apply_bill`;
 CREATE TABLE `oa_car_apply_bill` (
   `id` BIGINT NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `bill_code` VARCHAR(32) NOT NULL COMMENT '单据编号',
+  `bill_code` VARCHAR(32) NULL COMMENT '单据编号',
   `process_instance_id` VARCHAR(64) NULL COMMENT '流程实例编号',
   `process_status` TINYINT NULL COMMENT '单据状态',
   `car_id` BIGINT NULL COMMENT '车辆',
@@ -62,7 +62,7 @@ CREATE TABLE `oa_car_apply_bill` (
 DROP TABLE IF EXISTS `oa_car_return_bill`;
 CREATE TABLE `oa_car_return_bill` (
   `id` BIGINT NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `bill_code` VARCHAR(32) NOT NULL COMMENT '单据编号',
+  `bill_code` VARCHAR(32) NULL COMMENT '单据编号',
   `process_instance_id` VARCHAR(64) NULL COMMENT '流程实例编号',
   `process_status` TINYINT NULL COMMENT '单据状态',
   `apply_bill` VARCHAR(32) NULL COMMENT '用车申请单',

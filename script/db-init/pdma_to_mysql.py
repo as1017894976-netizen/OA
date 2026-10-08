@@ -50,7 +50,11 @@ def ddl(e):
     lines, pks = [], []
     for f in e['fields']:
         s = f"  `{f['defKey']}` {col_type(f)}"
-        s += ' NOT NULL' if f.get('notNull') or f.get('primaryKey') else ' NULL'
+        # PDMA 里不少业务字段标了非空却没有默认值，而代码插入时并不总会赋值（例如流程分类的描述），
+        # 这类字段按可空处理，避免 "Field 'xxx' doesn't have a default value"
+        has_default = default_clause(f) != ''
+        not_null = f.get('primaryKey') or (f.get('notNull') and has_default)
+        s += ' NOT NULL' if not_null else ' NULL'
         if f.get('autoIncrement'):
             s += ' AUTO_INCREMENT'
         s += default_clause(f)

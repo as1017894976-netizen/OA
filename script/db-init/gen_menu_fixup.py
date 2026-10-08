@@ -3,6 +3,9 @@
 各模块自带的菜单脚本存在：用车菜单缺失、员工档案挂在 parent_id=2000（商城商品）下、
 会议室/印章/入职等详情页路径与前端 router.push 的路径对不上等问题，这里统一删掉重建。
 菜单 id 固定使用 6000~6299，便于后续增量脚本引用。
+
+同时把「OA协同办公」授权给普通角色（common）：员工要能发起用车、用印、会议室单据，
+审批人也要能在待办里打开单据详情（详情接口要求 query 权限）。台账只授权查询（选车、选印章、选会议室用）。
 """
 
 # (id, 名称, 类型 1目录/2菜单/3按钮, 排序, 父id, 路由, 图标, 组件, 组件名, 是否显示)
@@ -83,6 +86,24 @@ for i, (mid, name, route, folder, comp, perm, btn) in enumerate(REL):
          f'hrm/employee-relation/{folder}/info/index', f'{comp}Info', visible=False, perm=f'{perm}:query')
 
 
+COMMON_ROLE_ID, COMMON_ROLE_TENANT_ID = 2, 1
+LEDGER_MENUS = {6011, 6021, 6031}  # 台账：普通角色只给查询
+
+
+def common_role_menu_ids():
+    parent = {m[0]: m[5] for m in MENUS}
+
+    def under_oa(mid):
+        while mid:
+            if mid == OA:
+                return True
+            mid = parent.get(mid)
+        return False
+
+    return [m[0] for m in MENUS if under_oa(m[0])
+            and not (m[5] in LEDGER_MENUS and m[3] == 3 and not m[2].endswith(':query'))]
+
+
 def q(v):
     if v is None:
         return 'NULL'
@@ -110,6 +131,10 @@ def main():
                "status, visible, keep_alive, always_show, creator, updater) VALUES")
     rows = [f"({', '.join(q(v) for v in m[:10])}, 0, {q(m[10])}, b'1', b'1', '1', '1')" for m in MENUS]
     out.append(',\n'.join(rows) + ';')
+    out.append('')
+    out.append('-- 3. 普通角色（common）授权 OA协同办公')
+    out.append('INSERT INTO system_role_menu (role_id, menu_id, creator, updater, tenant_id) VALUES')
+    out.append(',\n'.join(f"({COMMON_ROLE_ID}, {mid}, '1', '1', {COMMON_ROLE_TENANT_ID})" for mid in common_role_menu_ids()) + ';')
     ids = [m[0] for m in MENUS]
     assert len(ids) == len(set(ids)), '菜单 id 重复'
     print('\n'.join(out))
