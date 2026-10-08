@@ -36,14 +36,14 @@ CREATE TABLE IF NOT EXISTS `oa_seal` (
 -- ----------------------------
 -- 印章类型字典
 -- ----------------------------
-INSERT INTO `system_dict_type` (`name`, `type`, `status`) 
+INSERT INTO `system_dict_type` (`name`, `type`, `status`, `remark`)
 VALUES ('印章类型', 'oa_seal_type', 0, '印章类型字典')
 ON DUPLICATE KEY UPDATE `name` = VALUES(`name`);
 
 -- 获取刚插入的字典类型ID（用于插入字典数据）
 SET @seal_type_dict_id = (SELECT `id` FROM `system_dict_type` WHERE `type` = 'oa_seal_type');
 
-INSERT INTO `system_dict_data` (`sort`, `label`, `value`, `dict_type`, `status`, `color_type`, `css_class`) VALUES
+INSERT INTO `system_dict_data` (`sort`, `label`, `value`, `dict_type`, `status`, `color_type`, `css_class`, `remark`) VALUES
 (1, '公章', '1', 'oa_seal_type', 0, 'primary', '', '公司公章'),
 (2, '合同章', '2', 'oa_seal_type', 0, 'success', '', '合同专用章'),
 (3, '财务章', '3', 'oa_seal_type', 0, 'warning', '', '财务专用章'),
@@ -55,11 +55,11 @@ ON DUPLICATE KEY UPDATE `label` = VALUES(`label`), `value` = VALUES(`value`);
 -- ----------------------------
 -- 印章分类字典
 -- ----------------------------
-INSERT INTO `system_dict_type` (`name`, `type`, `status`) 
+INSERT INTO `system_dict_type` (`name`, `type`, `status`, `remark`)
 VALUES ('印章分类', 'oa_seal_cls', 0, '印章分类字典')
 ON DUPLICATE KEY UPDATE `name` = VALUES(`name`);
 
-INSERT INTO `system_dict_data` (`sort`, `label`, `value`, `dict_type`, `status`, `color_type`, `css_class`) VALUES
+INSERT INTO `system_dict_data` (`sort`, `label`, `value`, `dict_type`, `status`, `color_type`, `css_class`, `remark`) VALUES
 (1, '行政类', '1', 'oa_seal_cls', 0, 'primary', '', '行政管理类印章'),
 (2, '业务类', '2', 'oa_seal_cls', 0, 'success', '', '业务专用类印章'),
 (3, '财务类', '3', 'oa_seal_cls', 0, 'warning', '', '财务相关类印章'),
@@ -69,11 +69,11 @@ ON DUPLICATE KEY UPDATE `label` = VALUES(`label`), `value` = VALUES(`value`);
 -- ----------------------------
 -- 印章状态字典
 -- ----------------------------
-INSERT INTO `system_dict_type` (`name`, `type`, `status`) 
+INSERT INTO `system_dict_type` (`name`, `type`, `status`, `remark`)
 VALUES ('印章状态', 'oa_seal_status', 0, '印章使用状态')
 ON DUPLICATE KEY UPDATE `name` = VALUES(`name`);
 
-INSERT INTO `system_dict_data` (`sort`, `label`, `value`, `dict_type`, `status`, `color_type`, `css_class`) VALUES
+INSERT INTO `system_dict_data` (`sort`, `label`, `value`, `dict_type`, `status`, `color_type`, `css_class`, `remark`) VALUES
 (1, '在库', '0', 'oa_seal_status', 0, 'success', '', '印章在库可用'),
 (2, '停用', '1', 'oa_seal_status', 0, 'danger', '', '印章已停用'),
 (3, '使用中', '2', 'oa_seal_status', 0, 'warning', '', '印章使用中')

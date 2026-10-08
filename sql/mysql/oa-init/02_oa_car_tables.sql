@@ -1,0 +1,93 @@
+SET NAMES utf8mb4;
+
+DROP TABLE IF EXISTS `oa_car`;
+CREATE TABLE `oa_car` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `car_no` VARCHAR(32) NOT NULL COMMENT '车牌号',
+  `car_name` VARCHAR(64) NULL COMMENT '车辆名称',
+  `car_type` BIGINT NOT NULL COMMENT '车型',
+  `car_cls` BIGINT NOT NULL COMMENT '分类',
+  `brand` VARCHAR(64) NOT NULL COMMENT '品牌型号',
+  `seat_num` VARCHAR(32) NULL COMMENT '车座',
+  `bare_price` DECIMAL(24,2) NULL COMMENT '裸车价',
+  `force_insurance_date` DATE NULL COMMENT '交强险到期日期',
+  `business_insurance_date` DATE NULL COMMENT '商业险到期日期',
+  `year_check_date` DATE NULL COMMENT '年检日期',
+  `pic_url` VARCHAR(255) NULL COMMENT '上传照片',
+  `sort` INT NULL DEFAULT 0 COMMENT '显示顺序',
+  `status` TINYINT NOT NULL DEFAULT 0 COMMENT '状态（0正常 1停用）',
+  `remark` VARCHAR(500) NULL COMMENT '备注',
+  `creator` VARCHAR(64) NULL COMMENT '创建者',
+  `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updater` VARCHAR(64) NULL COMMENT '更新者',
+  `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `deleted` BIT NOT NULL DEFAULT b'0' COMMENT '是否删除',
+  `company_id` BIGINT NULL COMMENT '公司ID',
+  `company_name` VARCHAR(64) NULL COMMENT '公司名称',
+  `tenant_id` BIGINT NOT NULL DEFAULT 0 COMMENT '租户编号',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='车辆信息表';
+
+DROP TABLE IF EXISTS `oa_car_apply_bill`;
+CREATE TABLE `oa_car_apply_bill` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `bill_code` VARCHAR(32) NOT NULL COMMENT '单据编号',
+  `process_instance_id` VARCHAR(64) NULL COMMENT '流程实例编号',
+  `process_status` TINYINT NULL COMMENT '单据状态',
+  `car_id` BIGINT NULL COMMENT '车辆',
+  `go_time` DATETIME NULL COMMENT '出车时间',
+  `return_time` DATETIME NULL COMMENT '回车时间',
+  `go_area` VARCHAR(150) NULL COMMENT '出车地点',
+  `return_area` VARCHAR(150) NULL COMMENT '回车地点',
+  `cause` VARCHAR(255) NULL COMMENT '用车事由',
+  `applyer` VARCHAR(64) NULL COMMENT '申请人',
+  `passenger` VARCHAR(255) NULL COMMENT '随行人',
+  `remark` VARCHAR(500) NULL COMMENT '备注',
+  `creator` VARCHAR(64) NULL COMMENT '创建者',
+  `creator_name` VARCHAR(30) NULL COMMENT '创建者姓名',
+  `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updater` VARCHAR(64) NULL COMMENT '更新者',
+  `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `deleted` BIT NOT NULL DEFAULT b'0' COMMENT '是否删除',
+  `tenant_id` BIGINT NOT NULL DEFAULT 0 COMMENT '租户编号',
+  `parent_id` BIGINT NOT NULL DEFAULT 0 COMMENT '父级ID',
+  `dept_id` BIGINT NULL COMMENT '部门ID',
+  `dept_name` VARCHAR(64) NULL COMMENT '部门名称',
+  `company_id` BIGINT NULL COMMENT '公司ID',
+  `company_name` VARCHAR(64) NULL COMMENT '公司名称',
+  `car_no` VARCHAR(32) NULL COMMENT '车牌号',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用车申请单';
+
+DROP TABLE IF EXISTS `oa_car_return_bill`;
+CREATE TABLE `oa_car_return_bill` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `bill_code` VARCHAR(32) NOT NULL COMMENT '单据编号',
+  `process_instance_id` VARCHAR(64) NULL COMMENT '流程实例编号',
+  `process_status` TINYINT NULL COMMENT '单据状态',
+  `apply_bill` VARCHAR(32) NULL COMMENT '用车申请单',
+  `car_id` BIGINT NULL COMMENT '车辆',
+  `car_no` VARCHAR(32) NULL COMMENT '车牌号',
+  `go_time` DATETIME NULL COMMENT '出车时间',
+  `return_time` DATETIME NULL COMMENT '回车时间',
+  `go_area` VARCHAR(150) NULL COMMENT '出车地点',
+  `return_area` VARCHAR(150) NULL COMMENT '回车地点',
+  `cause` VARCHAR(255) NULL COMMENT '用车事由',
+  `applyer` VARCHAR(64) NULL COMMENT '申请人',
+  `passenger` VARCHAR(255) NULL COMMENT '随行人',
+  `remark` VARCHAR(500) NULL COMMENT '还车说明',
+  `creator` VARCHAR(64) NULL COMMENT '创建者',
+  `creator_name` VARCHAR(30) NULL COMMENT '创建者姓名',
+  `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updater` VARCHAR(64) NULL COMMENT '更新者',
+  `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `deleted` BIT NOT NULL DEFAULT b'0' COMMENT '是否删除',
+  `tenant_id` BIGINT NOT NULL DEFAULT 0 COMMENT '租户编号',
+  `parent_id` BIGINT NOT NULL DEFAULT 0 COMMENT '父级ID',
+  `dept_id` BIGINT NULL COMMENT '部门ID',
+  `dept_name` VARCHAR(64) NULL COMMENT '部门名称',
+  `company_id` BIGINT NULL COMMENT '公司ID',
+  `company_name` VARCHAR(64) NULL COMMENT '公司名称',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='还车申请单';
+
