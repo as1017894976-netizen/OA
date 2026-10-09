@@ -1,3 +1,6 @@
+> **这是 `claude/skeleton` 分支：去掉全部业务模块的空模板**，只有登录、系统管理和基础设施，用来读源码。
+> 先看 [docs/架构导读.md](docs/架构导读.md)，数据库用 `sql/mysql/skeleton/skeleton-init.sql`。完整版在 `master-jdk17` 分支。
+
 <h1 align="center">
   <br>
   RuoYi Office · 企业管理一体化平台

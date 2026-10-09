@@ -9,28 +9,12 @@
     <packaging>pom</packaging>
     <modules>
         <module>yudao-dependencies</module>
-        <module>yudao-gateway</module>
         <module>yudao-framework</module>
-        <!-- Server 主项目 -->
+        <!-- Server 主项目：启动类在这里，按需引入下面的业务模块 -->
         <module>yudao-server</module>
-        <!--  各种 module 拓展 -->
+        <!-- 业务模块：system 系统管理（用户、角色、菜单、部门、租户等），infra 基础设施（文件、配置、定时任务、代码生成等） -->
         <module>yudao-module-system</module>
         <module>yudao-module-infra</module>
-        <module>yudao-module-oa</module>
-        <module>yudao-module-asset</module>
-        <module>yudao-module-wms</module>
-        <module>yudao-module-hrm</module>
-        <module>yudao-module-member</module>
-        <module>yudao-module-bpm</module>
-        <module>yudao-module-pay</module>
-        <module>yudao-module-report</module>
-        <module>yudao-module-mp</module>
-        <module>yudao-module-mall</module>
-        <module>yudao-module-crm</module>
-        <module>yudao-module-erp</module>
-        <module>yudao-module-ai</module>
-        <module>yudao-module-iot</module>
-
     </modules>
 
     <name>${project.artifactId}</name>
